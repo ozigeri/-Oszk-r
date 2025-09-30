@@ -1,0 +1,16 @@
+/* UI könyvtárak alapvető stílusainak felülírására szolgál a fájl. */
+
+/* Side nav ne csak fullos képernyőn jelenjen meg. */
+@media (min-width: 200px) {
+    .m-side-navigation {
+        width: 3rem;
+    }
+}
+
+.date-inputs-button-fix {
+    z-index: 1;
+    display: flex;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}

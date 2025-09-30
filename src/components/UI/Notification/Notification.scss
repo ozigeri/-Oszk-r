@@ -1,0 +1,28 @@
+@use '../../../styles/global/variables.scss' as v;
+
+#notification-service-dom {
+    .notification-banner {
+        transition: opacity 0.4s;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        position: fixed;
+        z-index: 10;
+        bottom: 0;
+        left: 0;
+        width: calc(100% - v.$sidenav-width);
+        margin-left: v.$sidenav-width;
+        display: flex;
+        align-items: center;
+    }
+
+    .notification-banner button {
+        margin-left: auto;
+    }
+}
+
+#notification-service-dom.-show {
+    .notification-banner {
+        opacity: 1;
+    }
+}

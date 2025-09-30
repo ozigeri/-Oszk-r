@@ -1,0 +1,35 @@
+@use '../../styles/global/variables.scss' as v;
+
+.brand-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0px 10px 0px;
+    width: 100%;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    div > span {
+        height: 0.5rem;
+        width: 2rem;
+    }
+
+    h1 {
+        margin: 0;
+        font-weight: bold;
+        font-size: v.$text-3xl;
+        text-align: center;
+        color: #334155;
+    }
+}
+
+.-dark-mode .brand-title {
+    h1 {
+        color: rgb(230, 230, 230);
+    }
+}
