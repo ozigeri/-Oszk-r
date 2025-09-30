@@ -1,0 +1,40 @@
+@use '../../styles/global/variables.scss' as v;
+
+.main-header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    // display: flex;
+
+    .content {
+        height: 54px;
+        min-height: 54px;
+        margin-top: 3px;
+        margin-left: 3rem;
+        padding: 2.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgb(198, 198, 198);
+    }
+
+    .right-side-of-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+    h1 {
+        margin: 0 0 0 10px;
+        font-size: v.$text-lg;
+    }
+}
+
+.-dark-mode .main-header {
+    background-color: var(--dt-darker-bg);
+}
+.-dark-mode .main-header .content {
+    border-bottom: 1px solid rgb(81, 81, 81);
+    color: var(--dt-text-color);
+}

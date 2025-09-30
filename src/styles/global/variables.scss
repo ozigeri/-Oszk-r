@@ -1,0 +1,25 @@
+$text-sm: 8px;
+$text-md: 12px;
+$text-default: 12px;
+$text-lg: 18px;
+$text-xl: 24px;
+$text-2xl: 30px;
+$text-3xl: 36px;
+$text-4xl: 42px;
+
+$header-height: 57px;
+$sidenav-width: 3rem;
+
+:root {
+    --dt-darker-bg: #1a1c1d;
+    --dt-dark-bg: #232323;
+    --dt-light-bg: #333333;
+    --dt-text-color: black;
+}
+
+.-dark-mode {
+    --dt-darker-bg: #1a1c1d;
+    --dt-dark-bg: #232323;
+    --dt-light-bg: #333333;
+    --dt-text-color: white;
+}
