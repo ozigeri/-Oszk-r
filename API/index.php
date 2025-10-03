@@ -13,8 +13,7 @@ require_once 'private/carads.php';
 require_once 'private/peopleads.php';
 require_once 'private/users.php';
 
-
-
+Auth();
 switch($endpoint)
 {
     case "carads":
@@ -22,14 +21,12 @@ switch($endpoint)
         {
             if(isset($headers['Active']) && $headers["Active"] == "true")
             {
-                Auth();
                 $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
                     ? (int)$requestUri[$indexPhpPos + 2]: null;
                 ListACADS($adID);
             }
             else
             {
-                Auth();
                 $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
                     ? (int)$requestUri[$indexPhpPos + 2]: null;
                 ListCADS($adID);
@@ -41,7 +38,7 @@ switch($endpoint)
         break;
     case "peopleads":
         if ($requestMethod === 'GET') {
-            Auth();
+  
             ListActiveCarAds();
 
         }
@@ -51,7 +48,6 @@ switch($endpoint)
     case "users":
         if ($requestMethod === 'GET') 
         {
-            Auth();
             $userID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
                 ? (int)$requestUri[$indexPhpPos + 2]: null;
             ListUsers($userID);
@@ -63,3 +59,5 @@ switch($endpoint)
         http_response_code(404);
         break;
 }
+
+?>
