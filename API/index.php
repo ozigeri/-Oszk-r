@@ -3,7 +3,7 @@
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $urlData = parse_url($_SERVER['REQUEST_URI']);
 $requestUri = explode('/', trim($urlData['path'], '/'));
-
+$headers = getallheaders();
 $indexPhpPos = array_search('index.php', $requestUri);
 $endpoint = $requestUri[$indexPhpPos + 1] ?? null;
 
@@ -18,20 +18,24 @@ require_once 'private/users.php';
 switch($endpoint)
 {
     case "carads":
-        if ($requestMethod === 'GET') {
-            Auth();
-            ListACADS();
+        if ($requestMethod === 'GET')
+        {
+            if(isset($headers['Active']) && $headers["Active"] == "true")
+            {
+                Auth();
+                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
+                    ? (int)$requestUri[$indexPhpPos + 2]: null;
+                ListACADS($adID);
+            }
+            else
+            {
+                Auth();
+                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
+                    ? (int)$requestUri[$indexPhpPos + 2]: null;
+                ListCADS($adID);
+            }
 
         }
-        else if ($requestMethod === 'PUT')
-        {
-            if(isset($requestUri[2]) && is_numeric($requestUri[2])){
-                Auth();
-                $studentId = (int)$requestUri[2];
-                $data = json_decode(file_get_contents("php://input"), true);
-                addStudent($studentId, $data);
-            }
-        } 
         else
         http_response_code(405);
         break;
@@ -41,16 +45,8 @@ switch($endpoint)
             ListActiveCarAds();
 
         }
-        else if ($requestMethod === 'PUT')
-        {
-            if(isset($requestUri[2]) && is_numeric($requestUri[2])){
-                Auth();
-                $studentId = (int)$requestUri[2];
-                $data = json_decode(file_get_contents("php://input"), true);
-                addStudent($studentId, $data);
-            }
-        } 
-        else http_response_code(405);
+        else
+        http_response_code(405);
         break;
     case "users":
         if ($requestMethod === 'GET') 

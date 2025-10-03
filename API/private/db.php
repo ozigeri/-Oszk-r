@@ -31,12 +31,34 @@ function GetActivePeopleAds() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function GetActiveCarAds() {
+function GetActiveCarAds(?int $id = null) {
     global $pdo;
-    $stmt = $pdo->prepare("SELECT * FROM caradvertisements where timestamp >= NOW()");
-    $stmt ->execute();
+
+    if ($id && is_numeric($id)) {
+        $stmt = $pdo->prepare("SELECT * FROM caradvertisements WHERE id = :id AND timestamp >= NOW()");
+        $stmt->execute(['id' => $id]);
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM caradvertisements WHERE timestamp >= NOW()");
+        $stmt->execute();
+    }
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function GetAllCarAds(?int $id = null) {
+    global $pdo;
+
+    $query = "SELECT * FROM caradvertisements";
+
+    if ($id && is_numeric($id)) {
+        $query .= " WHERE id = :id";
+      }
+    
+      $stmt = $pdo->prepare($query);
+      $stmt->execute($id ? ['id' =>$id] : []);
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 function GetUserById(?int $id) {
     global $pdo;

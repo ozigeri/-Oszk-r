@@ -2,12 +2,18 @@
 
 require_once 'db.php';
 
-function ListACADS() 
-{
+
+function ListACADS(?int $id = null){
     header('Content-Type: application/json');
-    $activeCarAds = getJoinedCarAds();
+    $activeCarAds = GetActiveCarAds($id);
     echo json_encode($activeCarAds, JSON_PRETTY_PRINT);
-    
 }
+
+function ListCADS(?int $id = null){
+    header('Content-Type: application/json');
+    $activeCarAds = GetAllCarAds($id);
+    echo json_encode($activeCarAds, JSON_PRETTY_PRINT);
+}
+
 
 ?>
