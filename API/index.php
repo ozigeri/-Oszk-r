@@ -1,10 +1,69 @@
 <?php
 
-    include './private/db.php';
-    include './private/auth.php';
-    Auth();
-    $json = ListActivePeopleAds($pdo);
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+$urlData = parse_url($_SERVER['REQUEST_URI']);
+$requestUri = explode('/', trim($urlData['path'], '/'));
 
-    header('Content-Type: application/json');
-    echo $json;
-?>
+$indexPhpPos = array_search('index.php', $requestUri);
+$endpoint = $requestUri[$indexPhpPos + 1] ?? null;
+
+require_once 'private/db.php';
+require_once 'private/auth.php';
+require_once 'private/carads.php';
+require_once 'private/peopleads.php';
+require_once 'private/users.php';
+
+
+
+switch($endpoint)
+{
+    case "carads":
+        if ($requestMethod === 'GET') {
+            Auth();
+            ListACADS();
+
+        }
+        else if ($requestMethod === 'PUT')
+        {
+            if(isset($requestUri[2]) && is_numeric($requestUri[2])){
+                Auth();
+                $studentId = (int)$requestUri[2];
+                $data = json_decode(file_get_contents("php://input"), true);
+                addStudent($studentId, $data);
+            }
+        } 
+        else
+        http_response_code(405);
+        break;
+    case "peopleads":
+        if ($requestMethod === 'GET') {
+            Auth();
+            ListActiveCarAds();
+
+        }
+        else if ($requestMethod === 'PUT')
+        {
+            if(isset($requestUri[2]) && is_numeric($requestUri[2])){
+                Auth();
+                $studentId = (int)$requestUri[2];
+                $data = json_decode(file_get_contents("php://input"), true);
+                addStudent($studentId, $data);
+            }
+        } 
+        else http_response_code(405);
+        break;
+    case "users":
+        if ($requestMethod === 'GET') 
+        {
+            Auth();
+            $userID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
+                ? (int)$requestUri[$indexPhpPos + 2]: null;
+            ListUsers($userID);
+        }
+        else
+        http_response_code(405);
+        break;
+    default:
+        http_response_code(404);
+        break;
+}
