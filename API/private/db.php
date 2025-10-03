@@ -73,3 +73,15 @@ function GetUserById(?int $id) {
     $stmt->execute($id ? ['id' =>$id] : []);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function GetRoutes(string $table, string $direction)
+{
+    global $pdo;
+
+    $query = "SELECT DISTINCT `$direction` FROM `$table` WHERE date >= NOW()";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

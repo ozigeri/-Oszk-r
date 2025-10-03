@@ -12,10 +12,30 @@ require_once 'private/auth.php';
 require_once 'private/carads.php';
 require_once 'private/peopleads.php';
 require_once 'private/users.php';
+require_once 'private/routes.php';
 
 Auth();
 switch($endpoint)
 {
+    case "routes":
+        if ($requestMethod === 'GET')
+        {
+            if (isset($headers['Direction']) && isset($headers['Table']))
+            {
+                if ($headers['Table'] == 'caradvertisements' || $headers['Table'] == 'peopleadvertisements' )
+                {
+                    if ($headers['Direction'] == 'from' || $headers['Direction'] == 'to')
+                    {
+                        ListRoutes($headers['Table'], $headers['Direction']);
+                    }
+                    else
+                    http_response_code(404);
+                }
+            }
+        }
+        else
+        http_response_code(400);
+        break;
     case "carads":
         if ($requestMethod === 'GET')
         {
