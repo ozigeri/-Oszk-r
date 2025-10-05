@@ -1,4 +1,4 @@
-.custom-multi-dropdown {
+.custom-date-picker {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -30,7 +30,7 @@
         }
     }
 
-    .multi-dropdown-icon{
+    .date-icon {
         position: absolute;
         top: 50%;
         right: 0.5rem;
@@ -49,7 +49,7 @@
         }
     }
 
-    .dropdown-container {
+    .date-popup {
         position: absolute;
         top: 100%;
         left: 0;
@@ -57,31 +57,13 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        max-height: 250px;
-        overflow-y: auto;
         z-index: 20;
-
-        .dropdown-select-all,
-        .dropdown-item {
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.95rem;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: #eaecef;
-            }
-        }
-
-        .dropdown-item.highlighted {
-            background-color: #d0d4da;
-        }
+        padding: 1rem;
+        font-size: 0.95rem;
     }
 }
 
-.-dark-mode .custom-multi-dropdown {
+.-dark-mode .custom-datetime-picker {
     background-color: #2e3033;
     color: #f0f0f0;
 
@@ -89,24 +71,12 @@
         color: #f0f0f0;
     }
 
-    .dropdown-container {
+    .date-popup {
         background-color: #3a3c3f;
-
-        .dropdown-select-all,
-        .dropdown-item {
-            color: #f0f0f0;
-
-            &:hover {
-                background-color: #4a4c4f;
-            }
-        }
-
-        .dropdown-item.highlighted {
-            background-color: #5a5c5f;
-        }
+        color: #f0f0f0;
     }
 
-    .multi-dropdown-icon{
+    .date-icon {
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }

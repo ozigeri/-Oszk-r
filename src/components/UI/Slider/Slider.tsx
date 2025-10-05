@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './Slider.scss';
 
 type SliderProps = {
     additionalClassName?: string;
