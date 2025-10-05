@@ -2,10 +2,7 @@
 
 require_once 'db.php';
 
-
-
-
-function ListActiveCarAdsf(){
+function ListActiveCarAds(){
     global $pdo;
     header('Content-Type: application/json');
 

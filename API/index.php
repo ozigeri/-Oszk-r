@@ -27,18 +27,7 @@ switch($endpoint)
     case "routes":
         if ($requestMethod === 'GET')
         {
-            if (isset($headers['Direction']) && isset($headers['Table']))
-            {
-                if ($headers['Table'] == 'caradvertisements' || $headers['Table'] == 'peopleadvertisements' )
-                {
-                    if ($headers['Direction'] == 'from' || $headers['Direction'] == 'to')
-                    {
-                        ListRoutes($headers['Table'], $headers['Direction']);
-                    }
-                    else
-                    http_response_code(404);
-                }
-            }
+            ListRoutes();
         }
         else
         http_response_code(400);
@@ -46,7 +35,7 @@ switch($endpoint)
     case "carads":
         if ($requestMethod === 'GET')
         {
-            ListActiveCarAdsf();
+            ListActiveCarAds();
         }
         else
         http_response_code(405);
