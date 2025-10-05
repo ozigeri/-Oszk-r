@@ -2,19 +2,22 @@
 
 require_once 'db.php';
 
-function ListUserById(int $id){
-    $userid = intval($id);
-    header('Content-Type: application/json');
-    $userData = GetUserById($userid);
-    echo json_encode($userData, JSON_PRETTY_PRINT);
-    
-}
-
-
 function ListUsers(?int $id = null){
+    global $pdo;
     header('Content-Type: application/json');
-    $users = GetUserById($id);
-    echo json_encode($users, JSON_PRETTY_PRINT);
+
+    $query = "SELECT * FROM users";
+    $params = [];
+
+    if ($id !== null && is_numeric($id)) {
+        $query .= " WHERE id = :id";
+        $params['id'] = intval($id);
+    }
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_PRETTY_PRINT);
 }
 
 
