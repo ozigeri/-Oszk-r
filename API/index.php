@@ -46,19 +46,7 @@ switch($endpoint)
     case "carads":
         if ($requestMethod === 'GET')
         {
-            if(isset($headers['Active']) && $headers["Active"] == "true")
-            { 
-                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
-                ? (int)$requestUri[$indexPhpPos + 2]: null;
-                ListACADS($adID);
-            }
-            elseif (isset($headers['Active']) && $headers["Active"] == "false")
-            {
-                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
-                ? (int)$requestUri[$indexPhpPos + 2]: null;
-                ListCADS($adID);
-            }
-            else http_response_code(400);
+            ListActiveCarAdsf();
         }
         else
         http_response_code(405);
