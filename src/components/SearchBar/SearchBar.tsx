@@ -5,7 +5,19 @@ import Button from '../UI/Button/Button';
 import Slider from '../UI/Slider/Slider';
 import './SearchBar.scss';
 
-const SearchBar: React.FC = () => {
+type SearchFilters = {
+    from: string[];
+    to: string[];
+    dateTime: string;
+    maxPrice: number;
+    maxSeats: number;
+};
+
+type SearchBarProps = {
+    onSearch: (filters: SearchFilters) => void;
+};
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [from, setFrom] = useState<string[]>([]);
     const [to, setTo] = useState<string[]>([]);
     const [dateTime, setDateTime] = useState<string>('');
@@ -14,6 +26,7 @@ const SearchBar: React.FC = () => {
     const [maxSeats, setMaxSeats] = useState(4);
 
     const handleSearch = () => {
+        onSearch({ from, to, dateTime, maxPrice, maxSeats });
         console.log('Honnan:', from);
         console.log('Hova:', to);
         console.log('Mikor:', dateTime);

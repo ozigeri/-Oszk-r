@@ -1,5 +1,12 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Authorization, Content-Type, Active");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $urlData = parse_url($_SERVER['REQUEST_URI']);
 $requestUri = explode('/', trim($urlData['path'], '/'));
