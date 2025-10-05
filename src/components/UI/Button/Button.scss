@@ -1,0 +1,122 @@
+.a-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+
+    &.-without-icon {
+        gap: 0;
+    }
+
+    &.-without-label {
+        padding: 8px;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .a-button__label {
+        display: inline-block;
+    }
+
+    .a-button__icon {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.a-button--primary {
+    background-color: #007bff;
+    color: #ffffff;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4);
+        outline: none;
+    }
+}
+
+.a-button--secondary {
+    background-color: #f0f0f0;
+    color: #333;
+
+    &:hover {
+        background-color: #e0e0e0;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(150, 150, 150, 0.4);
+        outline: none;
+    }
+}
+
+.a-button--tertiary {
+    background-color: transparent;
+    color: #007bff;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        outline: none;
+    }
+}
+
+.a-button--integrated {
+    background-color: transparent;
+    border: none;
+    padding: 6px;
+    color: #666;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.3);
+        outline: none;
+    }
+}
+
+.-dark-mode .a-button--primary {
+    background-color: #3391ff;
+    color: #fff;
+
+    &:hover {
+        background-color: #1f6fd1;
+    }
+}
+
+.-dark-mode .a-button--secondary {
+    background-color: #444;
+    color: #eee;
+
+    &:hover {
+        background-color: #555;
+    }
+}
+
+.-dark-mode .a-button--tertiary {
+    color: #66b0ff;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

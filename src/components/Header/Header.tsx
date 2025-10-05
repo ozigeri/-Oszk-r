@@ -1,32 +1,21 @@
-import { useNavigate } from 'react-router';
-import ThemeSelector from '@/components/ThemeSelector/ThemeSelector';
-import useUser from '@/hooks/useUser';
-import AuthenticatedContent from '../Auth/AuthenticatedContent';
-import DotEnv from '@/utils/DotEnv';
-import './Header.scss';
+import React, { useState } from 'react';
+import './header.scss';
+import SideNav from '../UI/Sidenav/Sidenav';
 
-const Header = () => {
-    const navigate = useNavigate();
-
-    const user = useUser();
+const Header: React.FC = () => {
+    const [isNavOpen, setIsNavOpen] = useState(false);
 
     return (
-        <header className="main-header">
-            <div className="o-minimal-header__supergraphic"></div>
-            <div className="content">
-                <h1 onClick={() => navigate('/')} className="cursor-pointer">
-                    {DotEnv.appName}
-                </h1>
-                <div className="right-side-of-content">
-                    <ThemeSelector />
-                    <AuthenticatedContent>
-                        <div>
-                            {user.lastName} {user.firstName}
-                        </div>
-                    </AuthenticatedContent>
+        <>
+            <header className="header">
+                <div className="menu-icon" onClick={() => setIsNavOpen(true)}>
+                    ☰
                 </div>
-            </div>
-        </header>
+                <button className="center-button">Hirdetsd meg az utad</button>
+                <div className="profile-icon">👤</div>
+            </header>
+            <SideNav isOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
+        </>
     );
 };
 

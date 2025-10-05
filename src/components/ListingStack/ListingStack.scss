@@ -1,0 +1,41 @@
+.listing-stack-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.listing-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    gap: 2rem;
+}
+
+.listing-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.listing-route {
+    text-align: center;
+}
+
+.listing-details {
+    text-align: left;
+}
+
+.listing-action {
+    text-align: right;
+}
+
+.listing-button {
+    height: 36px;
+    align-self: flex-end;
+}
+

@@ -1,4 +1,5 @@
 import React, { ReactNode, MouseEvent } from 'react';
+import './Button.scss';
 
 type ButtonType = {
     children?: ReactNode;

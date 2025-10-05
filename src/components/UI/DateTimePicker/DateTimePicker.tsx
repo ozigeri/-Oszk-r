@@ -1,4 +1,5 @@
 import React from 'react';
+import './DateTimePicker.scss';
 
 type DateTimePickerProps = {
     name?: string;
@@ -31,8 +32,6 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
                 onChange={onChange}
                 disabled={disabled}
             />
-            <button type="button" className="a-datetime-input__button date-inputs-button-fix" aria-label="open dialog">
-            </button>
         </div>
     );
 };
