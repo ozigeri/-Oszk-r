@@ -51,21 +51,9 @@ switch($endpoint)
         http_response_code(405);
         break;
     case "peopleads":
-        if ($requestMethod === 'GET') 
+        if ($requestMethod === 'GET')
         {
-            if(isset($headers['Active']) && $headers["Active"] == "true")
-            {
-                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
-                    ? (int)$requestUri[$indexPhpPos + 2]: null;
-                ListAPADS($adID);
-            }
-            else
-            {
-                $adID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
-                    ? (int)$requestUri[$indexPhpPos + 2]: null;
-                ListPADS($adID);
-            }
-
+            ListPADS();
         }
         else
         http_response_code(405);

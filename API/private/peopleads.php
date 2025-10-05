@@ -2,21 +2,52 @@
 
 require_once 'db.php';
 
-function ListAPADS(?int $id = null){
+function ListPADS(){
     global $pdo;
     header('Content-Type: application/json');
 
-    $params = [];
-    $sql = "SELECT pa.*, 
-                   (SELECT COUNT(*) FROM peopleapplications WHERE peopleadv_id = pa.id) AS applicant_count 
-            FROM peopleadvertisements pa";
+    $headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
-    if ($id !== null && is_numeric($id)) {
-        $sql .= " WHERE pa.id = :id AND pa.date >= CURDATE() LIMIT 1";
-        $params['id'] = $id;
-    } else {
-        $sql .= " WHERE pa.date >= CURDATE() ORDER BY pa.date";
+    $where = [];
+    $params = [];
+
+    if (!empty($headers['active']) && $headers['active'] === 'true') {
+        $where[] = "`date` >= NOW()";
     }
+    
+    if (!empty($headers['id']) && is_numeric($headers['id'])) {
+        $where[] = "id = :id";
+        $params['id'] = $headers['id'];
+    }
+    
+    if (!empty($headers['from'])) {
+        $where[] = "`from` = :from";
+        $params['from'] = $headers['from'];
+    }
+    
+    if (!empty($headers['to'])) {
+        $where[] = "`to` = :to";
+        $params['to'] = $headers['to'];
+    }
+    
+    if (!empty($headers['date'])) {
+        $where[] = "DATE(`date`) = :date";
+        $params['date'] = $headers['date'];
+    }
+    
+    if (!empty($headers['maxpeople'])) {
+        $where[] = "countofpeople <= :maxpeople";
+        $params['maxpeople'] = $headers['maxpeople'];
+    }
+    
+    $sql = "SELECT * FROM peopleadvertisements";
+    
+    if ($where) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+    
+    $sql .= " ORDER BY `date`";
+    
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
@@ -26,27 +57,6 @@ function ListAPADS(?int $id = null){
 
 
 
-function ListPADS(?int $id = null){
-    global $pdo;
-    header('Content-Type: application/json');
-
-    $params = [];
-    $sql = "SELECT pa.*, 
-                   (SELECT COUNT(*) FROM peopleapplications papp WHERE papp.peopleadv_id = pa.id) AS applicant_count 
-            FROM peopleadvertisements pa";
-
-    if ($id !== null && is_numeric($id)) {
-        $sql .= " WHERE pa.id = :id LIMIT 1";
-        $params['id'] = $id;
-    } else {
-        $sql .= " ORDER BY pa.date";
-    }
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-
-    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_PRETTY_PRINT);
-}
 
 
 
