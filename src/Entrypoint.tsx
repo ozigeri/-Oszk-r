@@ -1,13 +1,20 @@
-import SearchBar from "./components/SearchBar/SearchBar";
-import ListingStack from "./components/ListingStack/ListingStack";
-//import BackgroundTitle from "./components/BackgroundTitle/BackgroundTitle";
+import { useState } from 'react';
+import SearchBar from './components/SearchBar/SearchBar';
+import ListingStack from './components/ListingStack/ListingStack';
 
 const Entrypoint = () => {
+    const [filters, setFilters] = useState({
+        from: [] as string[],
+        to: [] as string[],
+        dateTime: '',
+        maxPrice: 10000,
+        maxSeats: 8,
+    });
+
     return (
         <>
-            {/*<BackgroundTitle/>*/}
-            <SearchBar/>
-            <ListingStack />
+            <SearchBar onSearch={setFilters} />
+            <ListingStack filters={filters} />
         </>
     );
 };

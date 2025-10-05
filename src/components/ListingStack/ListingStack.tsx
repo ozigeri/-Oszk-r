@@ -12,7 +12,28 @@ type ListingItem = {
     user: string;
 };
 
-const ListingStack: React.FC = () => {
+type ApiCarAd = {
+    id: number;
+    userid: number;
+    from: string;
+    to: string;
+    spaces: number;
+    price: number;
+    timestamp: string;
+    emberekSzama: number;
+};
+
+type ListingStackProps = {
+    filters: {
+        from: string[];
+        to: string[];
+        dateTime: string;
+        maxPrice: number;
+        maxSeats: number;
+    };
+};
+
+const ListingStack: React.FC<ListingStackProps> = ({ filters }) => {
     const [data, setData] = useState<ListingItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -20,21 +41,31 @@ const ListingStack: React.FC = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await fetch('http://localhost/afpgit/-Oszk-r/API/index.php/carads/1', {
+                const response = await fetch('http://localhost/%21Oszk%C3%A1r/client/API/index.php/carads', {
                     headers: {
-                        'Authorization': 'Bearer HUNt1',
+                        Authorization: 'Bearer HUNt1',
                         'Content-Type': 'application/json',
+                        Active: 'true',
                     },
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP hiba: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
 
-                const result = await response.json();
-                setData(result);
+                const result: ApiCarAd[] = await response.json();
+
+                const formatted: ListingItem[] = result.map((item) => ({
+                    id: item.id.toString(),
+                    price: item.price,
+                    seats: item.spaces,
+                    route: `${item.from} → ${item.to}`,
+                    time: new Date(item.timestamp).toLocaleString(),
+                    user: `Felhasználó ${item.userid}`,
+                }));
+
+                setData(formatted);
             } catch (err: any) {
                 setError(err.message);
+                console.log(err);
             } finally {
                 setLoading(false);
             }
@@ -43,18 +74,25 @@ const ListingStack: React.FC = () => {
         fetchListings();
     }, []);
 
-    if (loading) {
-        return <div className="listing-stack-wrapper">Betöltés...</div>;
-    }
+    const filteredData = data.filter((item) => {
+        const fromMatch =
+            filters.from.length === 0 || filters.from.some((f) => item.route.toLowerCase().includes(f.toLowerCase()));
+        const toMatch =
+            filters.to.length === 0 || filters.to.some((t) => item.route.toLowerCase().includes(t.toLowerCase()));
+        const priceMatch = item.price <= filters.maxPrice;
+        const seatsMatch = item.seats <= filters.maxSeats;
+        const dateMatch = !filters.dateTime || new Date(item.time) >= new Date(filters.dateTime);
 
-    if (error) {
-        return <div className="listing-stack-wrapper">Hiba történt: {error}</div>;
-    }
+        return fromMatch && toMatch && priceMatch && seatsMatch && dateMatch;
+    });
+
+    if (loading) return <div className="listing-stack-wrapper">Betöltés...</div>;
+    if (error) return <div className="listing-stack-wrapper">Hiba történt: {error}</div>;
 
     return (
         <div className="listing-stack-wrapper">
             <ScrollStack>
-                {data.map((item) => (
+                {filteredData.map((item) => (
                     <ScrollStackItem key={item.id}>
                         <div className="listing-card">
                             <div className="listing-col listing-details">
