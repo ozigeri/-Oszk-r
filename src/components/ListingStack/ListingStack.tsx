@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ScrollStack, { ScrollStackItem } from '../UI/ScrollStack/ScrollStack';
 import Button from '../UI/Button/Button';
 import './ListingStack.scss';
@@ -12,86 +12,49 @@ type ListingItem = {
     user: string;
 };
 
-const mockData: ListingItem[] = [
-    {
-        id: '1',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User01',
-    },
-    {
-        id: '2',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User02',
-    },
-    {
-        id: '3',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User03',
-    },
-    {
-        id: '4',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User01',
-    },
-    {
-        id: '5',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User02',
-    },
-    {
-        id: '6',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User03',
-    },
-    {
-        id: '7',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User01',
-    },
-    {
-        id: '8',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User02',
-    },
-    {
-        id: '9',
-        price: 1200,
-        seats: 4,
-        route: 'Székesfehérvár - Budapest',
-        time: '8:00 - 8:30',
-        user: 'User03',
-    },
-];
-
 const ListingStack: React.FC = () => {
+    const [data, setData] = useState<ListingItem[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const response = await fetch('http://localhost/afpgit/-Oszk-r/API/index.php/carads/1', {
+                    headers: {
+                        'Authorization': 'Bearer HUNt1',
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP hiba: ${response.status}`);
+                }
+
+                const result = await response.json();
+                setData(result);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchListings();
+    }, []);
+
+    if (loading) {
+        return <div className="listing-stack-wrapper">Betöltés...</div>;
+    }
+
+    if (error) {
+        return <div className="listing-stack-wrapper">Hiba történt: {error}</div>;
+    }
+
     return (
         <div className="listing-stack-wrapper">
             <ScrollStack>
-                {mockData.map((item) => (
+                {data.map((item) => (
                     <ScrollStackItem key={item.id}>
                         <div className="listing-card">
                             <div className="listing-col listing-details">
