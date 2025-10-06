@@ -7,10 +7,15 @@ function ListRoutes(){
 
     $headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
-    $table = $headers['table'] ?? null;
-    $direction = $headers['direction'] ?? null;
+    if (!isset($headers['table']) || !isset($headers['direction'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Hiányos header'], JSON_PRETTY_PRINT);
+        exit;
+    }
+    $table = $headers['table'];
+    $direction = $headers['direction'];
 
-    $sql = "SELECT DISTINCT `$direction` FROM `$table` WHERE date >= NOW()";
+    $sql = "SELECT DISTINCT `$direction` FROM `$table` WHERE timestamp >= NOW()";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 

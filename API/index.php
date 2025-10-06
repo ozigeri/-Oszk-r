@@ -37,6 +37,10 @@ switch($endpoint)
         {
             ListActiveCarAds();
         }
+        elseif ($requestMethod === 'POST')
+        {
+            CreateCarAd();
+        }
         else
         http_response_code(405);
         break;
