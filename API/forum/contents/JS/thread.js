@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function CopyThreadLink(ThreadId)
 {
-    let url = "localhost/afp/forum/contents/php/thread.php?thread_id=" + ThreadId;
+    let url = "localhost/-Oszk-r/api/forum/contents/php/thread.php?thread_id=" + ThreadId;
     navigator.clipboard.writeText(url).then(() => {
         alert("Sikeresen kimásoltad a thread linkjét!");
     })
@@ -23,7 +23,7 @@ function CopyThreadLink(ThreadId)
 
 function CopyCommentLink(ThreadId,CommentId)
 {
-    let url = "localhost/afp/forum/contents/php/thread.php?thread_id=" + ThreadId + "#comment-" + CommentId;
+    let url = "localhost/-Oszk-r/api/forum/contents/php/thread.php?thread_id=" + ThreadId + "#comment-" + CommentId;
     navigator.clipboard.writeText(url).then(() => {
         alert("Sikeresen kimásoltad a comment linkjét!");
     })

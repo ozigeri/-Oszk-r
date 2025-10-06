@@ -117,9 +117,19 @@ function getComments(int $id) : array {
 function ArchThread(int $id): void{
     global $pdo;
 
-    $stmt = $pdo->prepare("UPDATE thread SET is_archived = 1 WHERE id = :id");
+    $stmt = $pdo->prepare("SELECT is_archived FROM thread WHERE id = :id");
     $stmt->execute(['id' => $id]);
-    echo('Thread archíválva!');
+    $current = $stmt->fetchColumn();
+
+    if ((int)$current === 1) {
+        $stmt = $pdo->prepare("UPDATE thread SET is_archived = 0 WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        echo "Archiválás leszedve";
+    } else {
+        $stmt = $pdo->prepare("UPDATE thread SET is_archived = 1 WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        echo "Thread archíválva!";
+    }
 }
 
 function DelComment(int $id): void{
