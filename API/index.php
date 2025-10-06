@@ -79,9 +79,11 @@ switch($endpoint)
     case "users":
         if ($requestMethod === 'GET') 
         {
-            $userID = isset($requestUri[$indexPhpPos + 2]) && is_numeric($requestUri[$indexPhpPos + 2])
-                ? (int)$requestUri[$indexPhpPos + 2]: null;
-            ListUsers($userID);
+            ListUsers();
+        }
+        elseif ($requestMethod === 'POST')
+        {
+            CreateUser();
         }
         else
         http_response_code(405);
