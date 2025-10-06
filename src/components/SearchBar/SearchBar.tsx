@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateFilters } from '../../store/slices/searchSlice';
 import MultiDropdown from '../UI/MultiDropdown/MultiDropdown';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import Button from '../UI/Button/Button';
 import Slider from '../UI/Slider/Slider';
 import './SearchBar.scss';
 
-type SearchFilters = {
-    from: string[];
-    to: string[];
-    dateTime: string;
-    maxPrice: number;
-    maxSeats: number;
-};
+const SearchBar: React.FC = () => {
+    const dispatch = useDispatch();
 
-type SearchBarProps = {
-    onSearch: (filters: SearchFilters) => void;
-};
-
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [from, setFrom] = useState<string[]>([]);
     const [to, setTo] = useState<string[]>([]);
     const [dateTime, setDateTime] = useState<string>('');
@@ -26,12 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const [maxSeats, setMaxSeats] = useState(4);
 
     const handleSearch = () => {
-        onSearch({ from, to, dateTime, maxPrice, maxSeats });
-        console.log('Honnan:', from);
-        console.log('Hova:', to);
-        console.log('Mikor:', dateTime);
-        console.log('Max díj:', maxPrice);
-        console.log('Max férőhely:', maxSeats);
+        dispatch(updateFilters({ from, to, dateTime, maxPrice, maxSeats }));
     };
 
     return (
@@ -40,9 +27,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 <MultiDropdown
                     options={[
                         { value: 'budapest', label: 'Budapest' },
-                        { value: 'debrecen', label: 'Debrecen' },
                         { value: 'szeged', label: 'Szeged' },
                         { value: 'gyor', label: 'Győr' },
+                        { value: 'debrecen', label: 'Debrecen' },
+                        { value: 'miskolc', label: 'Miskolc' },
                     ]}
                     placeholder="Honnan?"
                     defaultSelected={[]}
@@ -51,26 +39,25 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 />
                 <MultiDropdown
                     options={[
-                        { value: 'budapest', label: 'Budapest' },
                         { value: 'debrecen', label: 'Debrecen' },
-                        { value: 'szeged', label: 'Szeged' },
-                        { value: 'gyor', label: 'Győr' },
+                        { value: 'budapest', label: 'Budapest' },
+                        { value: 'pecs', label: 'Szeged' },
+                        { value: 'nyiregyhaza', label: 'Nyíregyháza' },
                     ]}
                     placeholder="Hova?"
                     defaultSelected={[]}
                     onChange={setTo}
                     selectAll
                 />
-                <DatePicker
-                    label=""
-                    value={dateTime}
-                    onChange={(e) => setDateTime(e.target.value)}
-                    className="search-date"
-                />
+                <DatePicker value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
                 <Button variant="primary" onClick={handleSearch} className="search-button">
                     Keresés
                 </Button>
-                <Button variant="secondary" onClick={() => setShowFilters(!showFilters)} className="filter-toggle-button">
+                <Button
+                    variant="secondary"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="filter-toggle-button"
+                >
                     További Szűrők
                 </Button>
             </div>

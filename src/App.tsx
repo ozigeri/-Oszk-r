@@ -16,6 +16,10 @@ import NotFound from '@/pages/NotFound/NotFound';
 import useUser from './hooks/useUser';
 import DotEnv from '@/utils/DotEnv';
 import LocationListener from './LocationListener';
+import DriverAdPage from './pages/DriverAdPage/DriverAdPage';
+import PassengerAdPage from './pages/PassangerAdPage/PassangerAdPage';
+
+
 
 function App() {
     const theme = useSelector((state: any) => state.theme);
@@ -51,6 +55,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Entrypoint />} />
+                        <Route path="/driver" element={<DriverAdPage />} />
+                        <Route path="/passenger" element={<PassengerAdPage />} />
                         <Route path="/demo" element={<Demo />} />
                         <Route path="/settings/app" element={<Settings />} />
                         <Route path="/ui-showcase" element={<UIWrapperShowcase />} />

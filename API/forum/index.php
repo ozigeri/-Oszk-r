@@ -9,7 +9,7 @@ require_once('./contents/private/db.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./contents/JS/index.js?v=<?php echo time(); ?>"></script>
     <link rel="stylesheet" href="./contents/css/styles.css?v=<?php echo time(); ?>">
-    <title>EKKE Fórum</title>
+    <title>Oszkár</title>
 </head>
 <body>
     <header id="header" class="header">

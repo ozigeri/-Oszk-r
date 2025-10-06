@@ -1,7 +1,7 @@
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     padding: 16px 32px;
     background-color: #ffffff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -23,32 +23,91 @@
     }
 }
 
-.center-button {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    padding: 10px 20px;
-    background-color: #f9f9f9;
-    border: none;
-    border-radius: 6px;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 24px;
+    position: relative;
+}
 
-    &:hover {
-        background-color: #eaeaea;
+.left-group,
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-title {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    h2 {
+        font-size: 18px;
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+    }
+
+    h5 {
+        font-size: 14px;
+        margin: 0;
+        color: #777;
+        font-weight: 400;
+        letter-spacing: 1px;
     }
 }
 
-.profile-icon {
-    font-size: 22px;
+.center-button {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #007bff 0%, #0056d1 100%);
     color: #ffffff;
-    background-color: #007bff;
-    border-radius: 50%;
-    padding: 10px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
+    transition: all 0.25s ease;
+    letter-spacing: 0.2px;
+}
 
-    &:hover {
-        background-color: #0056b3;
-    }
+.center-button:hover {
+    background: linear-gradient(135deg, #005fe0 0%, #004bb8 100%);
+    box-shadow: 0 5px 14px rgba(0, 123, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.center-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+}
+
+.profile-icon {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background: linear-gradient(135deg, #007bff 0%, #0056d1 100%);
+    border-radius: 24px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-icon:hover {
+    background: linear-gradient(135deg, #005fe0 0%, #004bb8 100%);
+    transform: scale(1.05);
+    box-shadow: 0 5px 14px rgba(0, 123, 255, 0.35);
+}
+
+.profile-icon:active {
+    transform: scale(1);
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
 }

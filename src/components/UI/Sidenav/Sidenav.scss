@@ -1,78 +1,90 @@
 .sidenav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-    opacity: 0.5;
-    z-index: 999;
-    cursor: pointer;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
 }
 
 .sidenav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 280px;
-    height: 100vh;
-    background: linear-gradient(180deg, #1b1b1f 0%, #2a2a33 100%);
-    color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1b1b1f 0%, #2a2a33 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease;
+
+  .sidenav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    padding: 2rem 1.5rem;
-    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
-    z-index: 1000;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(6px);
+    gap: 1.2rem;
 
-    .sidenav-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    .sidenav-item {
+      font-size: 1.2rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s ease;
 
-        .sidenav-item {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 1.2rem;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.2s ease, transform 0.2s ease;
+      &::before {
+        content: '';
+        position: absolute;
+        left: -1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: transparent;
+        transition: background 0.3s ease, left 0.3s ease;
+      }
 
-            &::before {
-                content: '';
-                position: absolute;
-                left: -1rem;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: transparent;
-                transition: background 0.3s ease, left 0.3s ease;
-            }
+      &:hover {
+        color: #6a5cff;
+        transform: translateX(5px);
 
-            &:hover {
-                color: #6a5cff;
-                transform: translateX(5px);
-
-                &::before {
-                    background: #6a5cff;
-                    left: -0.5rem;
-                }
-            }
+        &::before {
+          background: #6a5cff;
+          left: -0.5rem;
         }
+      }
     }
+  }
+
+  .sidenav-footer {
+    margin-top: auto;
+    font-size: 0.85rem;
+    color: #aaa;
+    text-align: center;
+    padding-top: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .sidenav {
-        width: 230px;
-        padding: 1.5rem 1rem;
+  .sidenav {
+    width: 230px;
+    padding: 1.5rem 1rem;
 
-        .sidenav-item {
-            font-size: 1.05rem;
-            margin-bottom: 1rem;
-        }
+    .sidenav-list .sidenav-item {
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
     }
+  }
 }

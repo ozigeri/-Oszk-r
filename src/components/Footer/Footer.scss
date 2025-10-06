@@ -7,6 +7,8 @@
     flex-direction: column;
     gap: 12px;
     align-items: center;
+    /* új sor: */
+    margin-top: auto;
 }
 
 .social-icons {
@@ -18,29 +20,29 @@
     font-size: 24px;
     color: #555;
     transition: color 0.2s ease;
+}
 
-    &:hover {
-        color: #007bff;
-    }
+.icon-link:hover {
+    color: #007bff;
 }
 
 .footer-links {
     font-size: 14px;
     color: #777;
+}
 
-    a {
-        color: #777;
-        text-decoration: none;
-        margin: 0 8px;
+.footer-links a {
+    color: #777;
+    text-decoration: none;
+    margin: 0 8px;
+}
 
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+.footer-links a:hover {
+    text-decoration: underline;
+}
 
-    span {
-        margin: 0 4px;
-    }
+.footer-links span {
+    margin: 0 4px;
 }
 
 .footer-copy {
