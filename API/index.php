@@ -59,6 +59,10 @@ switch($endpoint)
         {
             ListPADS();
         }
+        elseif ($requestMethod === 'POST')
+        {
+            CreatePeopleAd();
+        }
         else
         http_response_code(405);
         break;
