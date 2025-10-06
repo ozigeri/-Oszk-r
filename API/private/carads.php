@@ -85,8 +85,8 @@ function CreateCarAd() {
     header('Content-Type: application/json');
 
     $headers = array_change_key_case(getallheaders(), CASE_LOWER);
-    if (!isset($headers['userid']) && !isset($headers['from']) && !isset($headers['to']) && !isset($headers['date']) &&
-        !isset($headers['price']) && !isset($headers['spaces'])) {
+    if (!isset($headers['userid']) || !isset($headers['from']) || !isset($headers['to']) || !isset($headers['date']) ||
+        !isset($headers['price']) || !isset($headers['spaces'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Add meg az adatokat, mielőtt felakarsz valamit tolni db-be...'], JSON_PRETTY_PRINT);
         exit;

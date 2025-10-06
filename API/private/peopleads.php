@@ -55,11 +55,6 @@ function ListPADS(){
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_PRETTY_PRINT);
 }
 
-
-
-
-
-
 function ListPeopleApps(?int $id = null){
     global $pdo;
     header('Content-Type: application/json');
@@ -85,5 +80,33 @@ function getJoinedPeopleAds() {
     $stmt ->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function CreatePeopleAd() {
+    global $pdo;
+    header('Content-Type: application/json');
+
+    $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+    if (!isset($headers['userid']) || !isset($headers['from']) || !isset($headers['to']) || !isset($headers['date']) ||
+        !isset($headers['countofpeople'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Add meg az adatokat, mielőtt felakarsz valamit tolni db-be...'], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    $sql = "INSERT INTO peopleadvertisements (`userid`,`from`, `to`, `date`, `countofpeople`)
+            VALUES (:userid, :from, :to, :date, :countofpeople)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'userid' => $headers['userid'],
+        'from'   => $headers['from'],
+        'to'     => $headers['to'],
+        'date'   => $headers['date'],
+        'countofpeople'  => $headers['countofpeople'],
+    ]);
+
+    echo json_encode(['Siker' => 'Hírdetés feladva!'], JSON_PRETTY_PRINT);
+}
+
 
 ?>
