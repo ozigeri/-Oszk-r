@@ -1,0 +1,24 @@
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    .logo-image {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+    }
+
+    .logo-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #007bff;
+        letter-spacing: 0.5px;
+    }
+
+    &:hover .logo-text {
+        color: #0056b3;
+    }
+}

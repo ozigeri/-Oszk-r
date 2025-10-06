@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import ScrollStack, { ScrollStackItem } from '../UI/ScrollStack/ScrollStack';
+import AnimatedList from '../UI/AnimatedList/AnimatedList';
 import Button from '../UI/Button/Button';
-import './ListingStack.scss';
+import './AnimatedListingStack.scss';
 
 type ListingItem = {
     id: string;
@@ -24,10 +24,10 @@ type ApiCarAd = {
     timestamp: string;
 };
 
-const ListingStack: React.FC = () => {
+const AnimatedListingStack: React.FC = () => {
     const filters = useSelector((state: RootState) => state.search);
     const [data, setData] = useState<ListingItem[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -43,10 +43,9 @@ const ListingStack: React.FC = () => {
                 });
 
                 if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
-
                 const result: ApiCarAd[] = await response.json();
 
-                const formatted: ListingItem[] = result.map((item) => ({
+                const formatted = result.map((item) => ({
                     id: item.id.toString(),
                     price: item.price,
                     seats: item.spaces,
@@ -62,7 +61,6 @@ const ListingStack: React.FC = () => {
                 setLoading(false);
             }
         };
-
         fetchListings();
     }, []);
 
@@ -74,7 +72,6 @@ const ListingStack: React.FC = () => {
         const priceMatch = item.price <= filters.maxPrice;
         const seatsMatch = item.seats <= filters.maxSeats;
         const dateMatch = !filters.dateTime || new Date(item.time) >= new Date(filters.dateTime);
-
         return fromMatch && toMatch && priceMatch && seatsMatch && dateMatch;
     });
 
@@ -83,30 +80,30 @@ const ListingStack: React.FC = () => {
 
     return (
         <div className="listing-stack-wrapper">
-            <ScrollStack>
-                {filteredData.map((item) => (
-                    <ScrollStackItem key={item.id}>
-                        <div className="listing-card">
-                            <div className="listing-col listing-details">
-                                <div>{item.price} Ft</div>
-                                <div>{item.seats} fő</div>
-                                <div>{item.user}</div>
-                            </div>
-                            <div className="listing-col listing-route">
-                                <div>{item.route}</div>
-                                <div>{item.time}</div>
-                            </div>
-                            <div className="listing-col listing-action">
-                                <Button variant="primary" className="listing-button">
-                                    Jelentkezés
-                                </Button>
-                            </div>
+            <AnimatedList
+                items={filteredData}
+                className="animated-list-container"
+                renderItem={(item) => (
+                    <div className="listing-card">
+                        <div className="listing-col listing-details">
+                            <div>{item.price} Ft</div>
+                            <div>{item.seats} fő</div>
+                            <div>{item.user}</div>
                         </div>
-                    </ScrollStackItem>
-                ))}
-            </ScrollStack>
+                        <div className="listing-col listing-route">
+                            <div>{item.route}</div>
+                            <div>{item.time}</div>
+                        </div>
+                        <div className="listing-col listing-action">
+                            <Button variant="primary" className="listing-button">
+                                Jelentkezés
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            />
         </div>
     );
 };
 
-export default ListingStack;
+export default AnimatedListingStack;
