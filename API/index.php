@@ -81,6 +81,10 @@ switch($endpoint)
         {
             ListUsers();
         }
+        elseif ($requestMethod === 'POST')
+        {
+            CreateUser();
+        }
         else
         http_response_code(405);
         break;

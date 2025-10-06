@@ -67,4 +67,32 @@ function ListUsers() {
 
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_PRETTY_PRINT);
 }
+function CreateUser() {
+    global $pdo;
+    header('Content-Type: application/json');
+
+    $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+    if (!isset($headers['username']) || !isset($headers['password']) || !isset($headers['email']) ||
+        !isset($headers['name']) || !isset($headers['phonenumber']) || !isset($headers['date_of_birth']) || !isset($headers['male'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Add meg az adatokat, mielőtt felakarsz valamit tolni db-be...'], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    $sql = "INSERT INTO users (`username`, `password`, `email`, `name`, `phonenumber`, `date_of_birth`, `male`)
+            VALUES (:username, :password, :email, :name, :phonenumber, :date_of_birth, :male)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'username' => $headers['username'],
+        'password' => $headers['password'],
+        'email'    => $headers['email'],
+        'name'     => $headers['name'],
+        'phonenumber' => $headers['phonenumber'],
+        'date_of_birth' => $headers['date_of_birth'],
+        'male'    => $headers['male']
+    ]);
+
+    echo json_encode(['Siker' => 'Felhasználó létrehozva!'], JSON_PRETTY_PRINT);
+}
+
 ?>
