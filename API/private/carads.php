@@ -80,6 +80,33 @@ function ListCarApps(?int $id = null){
 }
 
 
+function CreateCarAd() {
+    global $pdo;
+    header('Content-Type: application/json');
+
+    $headers = array_change_key_case(getallheaders(), CASE_LOWER);
+    if (!isset($headers['userid']) && !isset($headers['from']) && !isset($headers['to']) && !isset($headers['date']) &&
+        !isset($headers['price']) && !isset($headers['spaces'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Add meg az adatokat, mielőtt felakarsz valamit tolni db-be...'], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    $sql = "INSERT INTO caradvertisements (`userid`,`from`, `to`, `timestamp`, `price`, `spaces`)
+            VALUES (:userid, :from, :to, :date, :price, :spaces)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'userid' => $headers['userid'],
+        'from'   => $headers['from'],
+        'to'     => $headers['to'],
+        'date'   => $headers['date'],
+        'price'  => $headers['price'],
+        'spaces' => $headers['spaces']
+    ]);
+
+    echo json_encode(['Siker' => 'Hírdetés feladva!'], JSON_PRETTY_PRINT);
+}
+
 ?> 
 
 
